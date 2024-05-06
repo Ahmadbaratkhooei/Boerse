@@ -1,0 +1,91 @@
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+#app {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+
+}
+
+#user-Title h3 {
+    text-align: center;
+}
+
+#user-info {
+    margin-bottom: 20px;
+}
+
+#user-info p {
+    margin: 7px 0;
+    font-weight: bold;
+}
+
+#buttons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* maximum 1 friction space, */
+    grid-gap: 10px; /* Abstand zwischen den Buttons */
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 44px;
+    cursor: pointer;
+    font-size: 13px;
+
+}
+
+button:hover {
+    background-color: #5145a0;
+    transform: scale(1.09);
+}
+
+#charts-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#buyForm, #sellForm {
+    display: none;
+    margin-bottom: 20px;
+}
+
+#stock-chart {
+    border: 1px solid #182878;
+    margin-bottom: 10px;
+}
+
+#stock-prices {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#transactions, #leaderboard, #market-messages {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #070f36;
+    border-radius: 25px;
+    background-color: #4bc0c0;
+    font-size: 16px;
+    color: #0a0e0e;
+}
+
+.error-message {
+    color: #ff0000;
+}
+
+
+

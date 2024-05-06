@@ -1,0 +1,256 @@
+openapi: 3.1.0
+info:
+  title: Web-Engineering I Projekt 1 - REST documentation
+  version: 1.0.0
+  description: "Für Projektaufgabe 1 im Fach Web-Engineering 1, SMIB, Hochschule Stralsund. WS 2023/24"
+servers:
+  - url: http://localhost:3000/
+    variables:
+      host:
+        default: "localhost"
+      port:
+        default: "3000"
+      basePath:
+        default: "api"
+paths:
+  /api/aktien:
+    get:
+      tags:
+        - data
+      summary: Gibt alle Aktien zurÃ¼ck
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aktien'
+  /api/benutzerdaten:
+    get:
+      tags:
+        - data
+      summary: Benutzerinformation
+      description: Gibt Name und Kontostand des aktuellen Benutzers aus
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Benutzer'
+  /api/depot:
+    get:
+      tags:
+        - data
+      summary: Depotinformartionen des Benutzers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Depot'
+  /api/depotAlle:
+    get:
+      tags:
+        - data
+      summary: Depotwert aller Benutzer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Depotwert'
+  /api/nachrichten:
+    get:
+      tags:
+        - data
+      summary: Nachrichten über Käufe aller Benutzer
+      parameters:
+        - in: query
+          name: letzteZeit
+          schema:
+            type: integer
+          required: false
+          description: Der größte Timestamp der letzten Anfrage liefert nur neuere Nachrichten.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nachrichten'
+  /api/umsaetze:
+    get:
+      tags:
+        - data
+      summary: Umsatzinformationen
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Umsatz'
+    post:
+      tags:
+        - data
+      summary: Kauf / Verkauf von Aktien
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AktieKaufVerkauf'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AktieKaufVerkaufResponse'
+        '422':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/umsaetze/{umsatzID}:
+    get:
+      tags:
+        - data
+      summary: Finde Umsatz auf Basis der ID
+      parameters:
+        - name: umsatzID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UmsatzId'
+        '422':
+          description: Unprocessable Entity / Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Aktien:
+      type: array
+      items:
+        $ref: '#/components/schemas/Aktie'
+    Aktie:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Microsoft"
+        preis:
+          type: number
+          example: 12.05
+        anzahlVerfuegbar:
+          type: number
+          example: 100
+    AktieKaufVerkauf:
+      type: object
+      properties:
+        aktie:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Microsoft"
+        anzahl:
+          type: number
+          example: 2
+    AktieKaufVerkaufResponse:
+      type: object
+      properties:
+        success:
+          type: string
+          example: "KAUF: max: 1 Microsoft"
+        umsatz:
+          $ref: '#/components/schemas/UmsatzId'
+    Benutzer:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Max"
+        kontostand:
+          type: number
+          example: 10000
+    Depot:
+      type: object
+      properties:
+        positionen:
+          type: array
+          items:
+            type: object
+            properties:
+              aktie:
+                $ref: '#/components/schemas/Aktie'
+              anzahl:
+                type: number
+                example: 12
+        wert:
+          type: number
+          example: 106.44
+    Depotwert:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Max"
+          summe:
+            type: number
+            example: 1337
+    Nachrichten:
+      type: array
+      items:
+        type: object
+        properties:
+          zeit:
+            type: string
+            format: date-time
+            example: "2020-12-02T14:24:07.451Z"
+          uhrzeit:
+            type: string
+            example: "14:24"
+          text:
+            type: string
+            example: "KAUF: Max: 2 Microsoft"
+    Umsatz:
+      type: array
+      items:
+        type: object
+        properties:
+          aktie:
+            $ref: '#/components/schemas/Aktie'
+          anzahl:
+            type: number
+            example: 40
+    UmsatzId:
+      type: object
+      properties:
+        aktie:
+          $ref: '#/components/schemas/Aktie'
+        anzahl:
+          type: number
+          example: 40
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "some error"

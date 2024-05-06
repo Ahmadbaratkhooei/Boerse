@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshan&Barat App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <div id="user-Title">
+        <h3>Lösung von Roshanzadeh & Baratkhooei</h3>
+    </div>
+
+    <div id="user-info">
+        <p id="username">Benutzername: </p>
+        <p id="account-balance">Kontostand: </p>
+    </div>
+
+    <div id="buttons-container">
+        <button id="buyButton">Kaufen</button>
+        <button id="sellButton">Verkaufen</button>
+        <button id="RefreshButton">Aktualisieren</button>
+        <button id="startStopButton">Start Auto-Trade</button>
+
+    </div>
+    <div id="errors">
+        <!-- Fehlermeldungen werden hier dynamisch eingefügt -->
+    </div>
+
+
+    <div id="buyForm">
+        <h2>Kaufen</h2>
+        <label for="AktienNameKauf">Aktienname:</label>
+        <input type="text" id="AktienNameKauf">
+        <label for="AnzahlKauf">Anzahl(positive Zahl):</label>
+        <input type="number" id="AnzahlKauf">
+        <button id="buySubmitButton">Kaufen</button>
+    </div>
+
+    <div id="sellForm">
+        <h2>Verkaufen</h2>
+        <label for="AktienNameVerkauf">Aktienname:</label>
+        <input type="text" id="AktienNameVerkauf">
+        <label for="AnzahlVerkauf">Anzahl(positive Zahl):</label>
+        <input type="number" id="AnzahlVerkauf">
+        <button id="sellSubmitButton">Verkaufen</button>
+    </div>
+
+    <div id="charts-container">
+        <h2>Chart von Aktienkurse</h2>
+        <canvas id="stock-chart" width="400" height="200"></canvas>
+        <div id="stock-prices">
+        </div>
+    </div>
+
+    <div id="transactions">
+
+        <!-- Umsatzinformationen werden hier dynamisch eingefügt -->
+    </div>
+
+    <div id="leaderboard">
+        <!-- Ranglisteneinträge werden hier dynamisch eingefügt -->
+    </div>
+
+    <div id="market-messages">
+        <!-- Marktnachrichten werden hier dynamisch eingefügt -->
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
